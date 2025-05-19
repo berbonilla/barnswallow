@@ -785,3 +785,6 @@ async def get_last_results():
         return {"error": "No results yet. Upload a file first."}
     return LAST_RESULTS
 
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
