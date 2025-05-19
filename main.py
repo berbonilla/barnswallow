@@ -278,6 +278,9 @@ def forecast(
         result_rows.append(res)
     return JSONResponse({"results": result_rows})
 
+@app.get("/ping")
+async def ping():
+    return {"ping": "pong"}
 
 @app.get("/list_assets")
 def list_assets():
