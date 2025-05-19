@@ -788,4 +788,6 @@ async def get_last_results():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", port=8001, host="0.0.0.0")
+    import os
+    port = int(os.environ.get("PORT", 8001))  # default to 8001 locally if you want
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
