@@ -1,0 +1,258 @@
+/* Reset & Basics */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #eef2f5;
+  color: #2a2a2a;
+}
+
+/* Scroll Containers and Arrows */
+.data-analytics-container {
+  max-width: 1600px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1rem;
+  white-space: nowrap; /* keep cards in one line */
+  overflow: auto;
+}
+.scroll-container-wrapper {
+  position: relative;
+}
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 1rem;
+  padding: 1rem 2.5rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+  white-space: nowrap;
+}
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(59, 101, 153, 0.9);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  color: white;
+  font-size: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+.scroll-arrow:hover {
+  background: rgba(45, 78, 120, 1);
+  transform: translateY(-50%) scale(1.2);
+}
+.scroll-arrow.left {
+  left: 8px;
+}
+.scroll-arrow.right {
+  right: 8px;
+}
+
+/* Cards */
+.flip-card {
+  flex-shrink: 0;
+  position: relative;
+  display: inline-block;
+  width: 300px;
+  box-sizing: border-box;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.1);
+  background: white;
+  transition: transform 0.3s ease;
+}
+.flip-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+.hover-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 0.5rem;
+  text-align: center;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Modal Overlay */
+.custom-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 10000; /* high z-index to avoid conflicts */
+}
+.custom-popup-overlay.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Modal Content */
+.custom-popup-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  position: relative;
+  max-height: 80vh;
+  overflow: auto;
+  transform: scale(0.8);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: opacity, transform;
+}
+.custom-popup-overlay.show .custom-popup-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Modal Close Button */
+.custom-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 28px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #333;
+  user-select: none;
+}
+
+/* Back Content Styling */
+.custom-popup-back-content {
+  background: linear-gradient(135deg, #3b6599 0%, #4a7aa5 100%);
+  color: #f0f4fa;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  margin-top: 1.5rem;
+  max-width: 100%;
+  text-align: center;
+  user-select: text;
+  transition: background-color 0.3s ease;
+}
+
+/* Inside Back Content Styling (target children elements) */
+.custom-popup-back-content .card-title {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: #e2e8f7;
+}
+
+.custom-popup-back-content .arrow-row {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.custom-popup-back-content .arrow-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.custom-popup-back-content .arrow-symbol {
+  font-size: 2.5rem;
+  color: #cbd5e1;
+}
+
+.custom-popup-back-content .arrow-date {
+  font-size: 1.1rem;
+  margin-top: 0.3rem;
+  color: #e0e7ff;
+}
+
+.custom-popup-back-content .arrow-date small {
+  font-size: 0.9rem;
+  color: #aabbcc;
+}
+
+/* Map Section */
+.map-section {
+  background: #2f5371;
+  color: white;
+  border-radius: 12px;
+  padding: 1rem;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgb(0 0 0 / 0.2);
+}
+
+#map {
+  width: 100%;
+  height: 650px;
+  border-radius: 12px;
+}
+
+/* Scroll arrows refinement */
+.scroll-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  width: 40px;
+  height: 80px;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  z-index: 10;
+  transition: transform 0.2s ease, background 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background-color: #2f5371;
+}
+
+.scroll-arrow:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.scroll-arrow.left {
+  left: 0;
+}
+
+.scroll-arrow.right {
+  right: 0;
+}
