@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+numpy
+pandas
+seaborn
+scikit-learn
+multitool
+tensorflow
+db-sqlite3
+matplotlib
+python-multipart
+openpyxl

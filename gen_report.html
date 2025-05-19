@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swallow Migration Forecast</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="/static/data-analytics-style.css">
+<link rel="stylesheet" href="/static/main.css">
+<link rel="stylesheet" href="/static/dashboard.css">
+<style>
+
+</style>
+</head>
+<body>
+<div class="container">
+<aside class="sidebar">
+<h2>SwallowTrack</h2>
+<nav>
+    <button onclick="showSection('dashboard')" class="active">Dashboard</button>
+    <button onclick="showSection('analytics')">Analytics</button>
+    <button onclick="showSection('model-training')">Model Training</button>
+    <button onclick="showSection('Interpreted_Data')">Interpreted Data</button>
+    <button onclick="showSection('help')">Help</button>
+
+</nav>
+</aside>
+
+<main class="main-content">
+
+<section id="dashboard" class="dashboard-section">
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <div class="slideshow" id="slideshow">
+      <img src="Images/D_B/1.jpg" alt="Barn Swallow 1" class="active" />
+      <img src="Images/D_B/2.jpg" alt="Barn Swallow 2" />
+      <img src="Images/D_B/3.jpg" alt="Barn Swallow 3" />
+      <img src="Images/D_B/4.jpg" alt="Barn Swallow 4" />
+      <img src="Images/D_B/5.jpg" alt="Barn Swallow 5" />
+      <img src="Images/D_B/6.jpg" alt="Barn Swallow 6" />
+      <img src="Images/D_B/7.jpg" alt="Barn Swallow 7" />
+      <img src="Images/D_B/8.jpg" alt="Barn Swallow 8" />
+      <img src="Images/D_B/9.jpg" alt="Barn Swallow 9" />
+      <img src="Images/D_B/10.jpg" alt="Barn Swallow 10" />
+      <img src="Images/D_B/11.jpg" alt="Barn Swallow 11" />
+      <img src="Images/D_B/12.jpg" alt="Barn Swallow 12" />
+      <img src="Images/D_B/13.jpg" alt="Barn Swallow 13" />
+      <img src="Images/D_B/14.jpg" alt="Barn Swallow 14" />
+    </div>
+
+    <!-- Navigation Dots -->
+    <div class="dots" id="slideshow-dots">
+      <span class="dot active" onclick="moveToSlide(0)"></span>
+      <span class="dot" onclick="moveToSlide(1)"></span>
+      <span class="dot" onclick="moveToSlide(2)"></span>
+      <span class="dot" onclick="moveToSlide(3)"></span>
+      <span class="dot" onclick="moveToSlide(4)"></span>
+      <span class="dot" onclick="moveToSlide(5)"></span>
+      <span class="dot" onclick="moveToSlide(6)"></span>
+      <span class="dot" onclick="moveToSlide(7)"></span>
+      <span class="dot" onclick="moveToSlide(8)"></span>
+      <span class="dot" onclick="moveToSlide(9)"></span>
+      <span class="dot" onclick="moveToSlide(10)"></span>
+      <span class="dot" onclick="moveToSlide(11)"></span>
+      <span class="dot" onclick="moveToSlide(12)"></span>
+      <span class="dot" onclick="moveToSlide(13)"></span>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="dashboard-content">
+    <div class="dashboard-text-container">
+      <h1 class="dashboard-title">Why Do Barn Swallows Visit Batangas City?</h1>
+      <p class="dashboard-text">
+        Welcome to 
+        <span class="highlight-title">
+          Forecasting Barn Swallow Migration: A Validation of Migration Pattern Recognition
+        </span>, this website delves into the migration patterns of the Barn Swallow (<em>Hirundo rustica</em>) and its enduring relationship with the community of Batangas City. Explore the fascinating world of bird migration, with real-time forecasting and in-depth insights.
+      </p>
+    </div>
+
+    <!-- Horizontal Cards -->
+    <div class="dashboard-cards-container">
+    <div class="dashboard-card" role="button" tabindex="0" onclick="showSection('analytics')">
+        <h3>Analytics</h3>
+        <p style="text-align: justify;color: black;font-family: 'Segoe UI', sans-serif;font-weight: lighter;">Explore detailed statistics and visualizations of Barn Swallow migration trends and environmental factors influencing their patterns.</p>
+    </div>
+    <div class="dashboard-card" role="button" tabindex="0" onclick="showSection('model-training')">
+        <h3>Model Training</h3>
+        <p style="text-align: justify;color: black;font-family: 'Segoe UI', sans-serif;font-weight: lighter;">Access the tools and processes used to train our predictive models that forecast migration timing and routes with high accuracy.</p>
+    </div>
+    <div class="dashboard-card" role="button" tabindex="0" onclick="showSection('Interpreted_Data')">
+        <h3>Interpreted Data</h3>
+        <p style="text-align: justify;color: black;font-family: 'Segoe UI', sans-serif;font-weight: lighter;">Review analyzed migration data with interpretations that provide insights into seasonal behaviors and community impact.</p>
+    </div>
+    <div class="dashboard-card" role="button" tabindex="0" onclick="showSection('help')">
+        <h3>Help</h3>
+        <p style="text-align: justify;color: black;font-family: 'Segoe UI', sans-serif;font-weight: lighter;">Find guidance on how to use the website features, understand migration data, and get support for any questions.</p>
+    </div>
+    </div>
+
+</section>
+
+
+
+<section id="analytics" class="section">
+    <h2>Swallow Migration Analytics</h2>
+    <br>
+        <div class="controls">
+            <div class="control-group">
+                <label for="model_name">Model:</label>
+                <select id="model_name"></select>
+            </div>
+            <div class="control-group">
+                <label for="data_name">Data File:</label>
+                <select id="data_name"></select>
+            </div>
+            <div class="control-group">
+                <label for="num_days">Number of Predictions</label>
+                <input type="number" id="num_days" value="1" min="1" style="width: 60px;">
+            </div>
+            <button onclick="generateForecast()">Generate Forecast</button>
+            <div id="statusMessage" style="display:none;"></div>
+        </div>
+    <div class="tab-buttons">
+    <button onclick="showSubContent('analytics', 'arrival', this)" class="active">Next Arrivals</button>
+    <button onclick="showSubContent('analytics', 'routes', this)">Predicted Routes</button>
+    <button onclick="showSubContent('analytics', 'environment', this)">Weather Impact</button>
+    <button onclick="showSubContent('analytics', 'map', this)">Departure Route</button>
+    <!-- <button onclick="showSubContent('analytics', 'timeline', this)">Timeline Graph</button>
+    <button onclick="showSubContent('analytics', 'weather', this)">Environmental Chart</button> -->
+    <button onclick="showSubContent('analytics', 'patterns', this)">Patterns & Hotspots</button>
+    </div>
+    <div class="sub-content active" id="analytics-arrival">
+        <h3>Forecasted Arrival/Departure</h3>
+        <p>This panel shows the predicted migration dates and times.</p>
+        <div id="arrival-content"></div>
+    </div>
+    <div class="sub-content" id="analytics-routes">
+        <h3>Predicted Routes and Stopover Sites</h3>
+        <p>Map-based prediction of flight paths and stopovers. Click markers for details.</p>
+        <div id="routes-map-container" class="map-container"></div>
+        <div id="routes-content-details" class="content-details"></div>
+    </div>
+    <div class="sub-content" id="analytics-environment">
+        <h3>Environmental Conditions & Behavior Impact</h3>
+        <p>Forecasted weather and its influence on migration behavior.</p>
+        <div id="environment-content"></div>
+    </div>
+    <div class="sub-content" id="analytics-map">
+        <h3>Migration Map</h3>
+        <p>Forecasted daily locations and connecting routes. Click markers for details.</p>
+        <div id="migration-map-container" class="map-container"></div>
+        <div id="map-content-details" class="content-details"></div>
+    </div>
+    <div class="sub-content" id="analytics-timeline">
+        <h3>Arrival & Departure Timeline</h3>
+        <p>Timeline graphs showing arrival/departure at each site. (Data same as 'Next Arrivals')</p>
+        <div id="timeline-content"></div>
+    </div>
+    <div class="sub-content" id="analytics-weather">
+        <h3>Weather Trends During Migration</h3>
+        <p>Charts comparing temperature, wind, and bird activity. (Data same as 'Weather Impact')</p>
+        <div id="weather-content"></div>
+    </div>
+    <div class="sub-content" id="analytics-patterns">
+        <h3>Behavioral Patterns & Hotspots</h3>
+        <p>Map displaying hotspots (intensity based on bird density) and data points with environmental details. Click markers for details.</p>
+        <div id="patterns-map-container" class="map-container"></div>
+        <div id="patterns-content-details" class="content-details"></div>
+    </div>
+</section>
+
+<section id="model-training" class="section">
+    <h2>Model Training</h2>
+    <div class="upload-container">
+        <div class="header">
+            <h1>Model Training Hub</h1>
+            <p>Upload Training Data, Train Models, and View Results</p>
+        </div>
+        
+        <div class="upload-tabs ">
+            <button class="upload-tab" data-tab="uploads">Uploads</button>
+            <button class="upload-tab" data-tab="models">Models</button>
+            <button class="upload-tab" data-tab="validation">Validation</button>
+        </div>
+        
+        <!-- Training Progress Modal -->
+        <div class="modal" id="training-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Training in Progress</h2>
+                    <button class="modal-close" onclick="closeModal('training-modal')" id="close-training-btn" style="display:none;">&times;</button>
+                </div>
+                <div class="progress-container" style="display:block;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="training-progress"></div>
+                    </div>
+                </div>
+                <div class="progress-log" id="training-log" style="max-height:300px; overflow-y:auto; margin-top:1rem; padding:1rem; background:#f5f5f5; border-radius:0.25rem;"></div>
+            </div>
+        </div>
+        
+        <!-- Upload Tab -->
+        <div class="upload-tab-content" id="uploads-tab">
+            <div class="upload-card">
+                <h2>Upload Training Data File</h2>
+                <form action="/upload" method="post" enctype="multipart/form-data" class="upload-form" onsubmit="return validateUpload()">
+                    <input type="file" id="xlsx-file" name="file" accept=".xlsx" required>
+                    <button  type="submit" class="btn btn-primary" id="upload-btn">Upload & Train</button>
+                </form>
+                
+                <!-- Progress container for uploads tab -->
+                <div class="progress-container" id="upload-progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="upload-progress"></div>
+                    </div>
+                    <div class="progress-label" id="upload-label">Processing...</div>
+                </div>
+            </div>
+            
+            <div class="upload-card">
+                <h2>Uploaded Files</h2>
+                <table id="uploads-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Columns</th>
+                            <th>Rows</th>
+                            <th>Upload Date</th>
+                            <th>Version</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="uploads-list">
+                        <tr>
+                            <td colspan="7" class="loading">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Models Tab -->
+        <div class="upload-tab-content" id="models-tab">
+            <div class="upload-card">
+                <h2>Trained Models</h2>
+                <table id="models-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Size</th>
+                            <th>Version</th>
+                            <th>Training Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="models-list">
+                        <tr>
+                            <td colspan="7" class="loading">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Validation Tab -->
+        <div class="upload-tab-content" id="validation-tab">
+            <div class="upload-card">
+                <h2>Model Validation Results</h2>
+                <table id="validation-table">
+                    <thead>
+                        <tr>
+                            <th>Model</th>
+                            <th>Training Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="validation-list">
+                        <tr>
+                            <td colspan="5" class="loading">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="results-container"></div>
+        </div>
+    </div>
+
+    <!-- Rename Modal -->
+    <div class="modal" id="rename-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Rename</h2>
+                <button class="modal-close" onclick="closeModal('rename-modal')">&times;</button>
+            </div>
+            <form id="rename-form" class="rename-form">
+                <input type="upload-hidden" id="rename-id">
+                <input type="upload-hidden" id="rename-type">
+                <input type="text" id="rename-name" class="form-control" required>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Model Details Modal -->
+    <div class="modal" id="model-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="model-modal-title">Model Details</h2>
+                <button class="modal-close" onclick="closeModal('model-modal')">&times;</button>
+            </div>
+            <div id="model-modal-content">
+                <!-- Populated dynamically -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="help" class="section">
+<h2 style="font-size: 32px; color: #3A6FF1; text-align: center; margin-bottom: 30px;">User Guide</h2>
+    <div style="font-family: 'Arial', sans-serif; background-color: #F7F9FC; padding: 30px; display: flex; flex-direction: column; align-items: center;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 30px; background-color: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+            <h2 style="font-size: 30px; color: #333; text-align: center; margin-bottom: 20px;">SwallowTrack - User Guide</h2>
+            <p style="font-size: 18px; color: #555; text-align: justify; line-height: 1.6;">Welcome to <b>SwallowTrack</b>. This guide will walk you through uploading data, training models, and generating predictions for bird migration forecasting. Let’s dive in!</p>
+
+            <!-- Section 1: Uploading Data -->
+            <div style="margin-top: 40px; padding: 25px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 5px solid #3A6FF1;">
+                <h3 style="font-size: 24px; color: #3A6FF1; margin-bottom: 15px;">1. Uploading Data for Model Training</h3>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;">To train a model, upload a valid <b>.xlsx</b> file with these columns:</p>
+                <div style="padding-left: 20px; font-size: 16px; color: #555; line-height: 1.8;">
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Date</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Map Location</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Latitude</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Longitude</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Time of Arrival</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Time of Departure of First Flock</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Time of Departure of Last Flock</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Temperature</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Wind Speed</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Direction Code</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Bird Density</b>
+                    </p>
+                </div>
+                <p style="font-size: 16px; color: #555;">Click <b>Choose File</b>, select your file, and then click <b>Upload & Train</b> to start training the model.</p>
+            </div>
+
+            <!-- Section 2: Viewing Uploaded Files -->
+            <div style="margin-top: 40px; padding: 25px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 5px solid #3A6FF1;">
+                <h3 style="font-size: 24px; color: #3A6FF1; margin-bottom: 15px;">2. Viewing Uploaded Files</h3>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;">Once your file is uploaded, it will appear in the <b>Uploaded Files</b> section with these details:</p>
+                <div style="padding-left: 20px; font-size: 16px; color: #555; line-height: 1.8;">
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>File Name</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>File Size</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Number of Columns</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Number of Rows</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Upload Date</b>
+                    </p>
+                </div>
+                <p style="font-size: 16px; color: #555;">You can also <b>Download</b>, <b>View</b>, or <b>Delete</b> files here.</p>
+            </div>
+
+            <!-- Section 3: Training the Model -->
+            <div style="margin-top: 40px; padding: 25px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 5px solid #3A6FF1;">
+                <h3 style="font-size: 24px; color: #2196F3; margin-bottom: 15px;">3. Training the Model</h3>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;">After uploading the data, click <b>Upload & Train</b>. The platform will use the data to train the model, calculating key metrics like <b>MSE</b> and <b>RMSE</b> to evaluate accuracy.</p>
+            </div>
+
+            <!-- Section 4: Viewing Trained Models -->
+            <div style="margin-top: 40px; padding: 25px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 5px solid #3A6FF1;">
+                <h3 style="font-size: 24px; color: #3A6FF1; margin-bottom: 15px;">4. Viewing Trained Models</h3>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;">Once the model is trained, it will appear in the <b>Trained Models</b> section with details like:</p>
+                <div style="padding-left: 20px; font-size: 16px; color: #555; line-height: 1.8;">
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Model Name</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Model Size</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>Training Date</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>MSE</b>
+                    </p>
+                    <p style="font-size: 16px; color: #3A6FF1; margin-bottom: 10px;">
+                        <span style="font-size: 20px; color: #3A6FF1; margin-right: 10px;"></span><b>RMSE</b>
+                    </p>
+                </div>
+                <p style="font-size: 16px; color: #555;">You can <b>Download</b>, <b>Rename</b>, or <b>Delete</b> models here.</p>
+            </div>
+
+            <!-- Section 5: Validating the Model -->
+            <div style="margin-top: 40px; padding: 25px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 5px solid #3A6FF1;">
+                <h3 style="font-size: 24px; color: #3A6FF1; margin-bottom: 15px;">5. Validating the Model</h3>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;">The model is validated to assess performance with test data. Validation metrics like <b>MSE</b>, <b>RMSE</b>, and <b>MAE</b> indicate accuracy:</p>
+                <br>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;"><b>MSE (Mean Squared Error):</b> Measures the average squared difference between predicted and actual values. Lower values mean better accuracy.</p>
+                <pre style="font-size: 16px; color: #555; background-color: #e8f5e9; padding: 10px; border-radius: 5px;">MSE = (1/n) * Σ(actual_value - predicted_value)^2</pre>
+                <br>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;"><b>RMSE (Root Mean Squared Error):</b> The square root of MSE, providing an interpretable error value in the same units as the original data.</p>
+                <pre style="font-size: 16px; color: #555; background-color: #e8f5e9; padding: 10px; border-radius: 5px;">RMSE = √(MSE)</pre>
+                <br>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;"><b>MAE (Mean Absolute Error):</b> Measures the average of the absolute differences between predicted and actual values. It’s less sensitive to large errors.</p>
+                <pre style="font-size: 16px; color: #555; background-color: #e8f5e9; padding: 10px; border-radius: 5px;">MAE = (1/n) * Σ|actual_value - predicted_value|</pre>
+                <p style="font-size: 16px; color: #555;">You can view detailed validation results by clicking <b>Info</b> next to the model.</p>
+            </div>
+
+            <!-- Section 6: Generating Predictions -->
+            <div style="margin-top: 40px; padding: 25px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-left: 5px solid #3A6FF1;">
+                <h3 style="font-size: 24px; color: #3A6FF1; margin-bottom: 15px;">6. Generating Predictions</h3>
+                <p style="font-size: 16px; color: #555; margin-bottom: 20px;">Once your model is trained, select it, upload a prediction data file, and specify the number of predictions. Click <b>Generate Forecast</b> to visualize predicted migration routes and behavior patterns.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+</section>
+
+    <!-- To be Edited -->
+<section id="Interpreted_Data" class="section" style="max-width: 1200px; margin: 40px auto; padding: 20px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); font-family: Arial, sans-serif;">
+    <h2 style="font-size: 28px; color: #0077cc; text-align: center; margin-bottom: 30px;">Interpreted Data</h2>
+    <h3 style="font-size: 24px; color: #0077cc; text-align: center; margin-bottom: 20px;"> Analyzing Bird Migration Pattern of Barn Swallows <i>(Layang Layang)</i> behaviour in Batangas City using Pattern Recognition </h3>
+    <!-- Group 1 -->
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-bottom: 30px;">
+        <div id="heatmap-visual-container" class="p-4 bg-gray-50 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4 text-gray-700">Heatmap and Prediction Analysis</h2>
+
+        <select id="model-select-heatmap" class="w-full p-2 mb-4 border border-gray-300 rounded-lg">
+            <option value="">Select a model...</option>
+        </select>
+
+        <div id="heatmap-charts-container" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-600">Heatmap of Metrics</h3>
+                <canvas id="heatmapGraph"></canvas>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-600">Training Loss Graph</h3>
+                <canvas id="trainingLossGraph"></canvas>
+            </div>
+        </div>
+
+        <div id="actual-predicted-container">
+            <h3 class="text-lg font-semibold mb-4 text-gray-600">Actual vs. Predicted Metrics</h3>
+        </div>
+    </div>
+    </div>
+
+    <!-- Group 2 -->
+    <h3 style="font-size: 24px; color: #0077cc; text-align: center; margin-bottom: 20px;">Forecasting Barn Swallow Migration: A Validation of Migration Pattern Recognition</h3>
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+        <div id="model-metrics-container" class="p-4 bg-gray-50 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4 text-gray-700">Model Metrics Overview & Validation</h2>
+            <select id="model-select">
+                <option value="">Select a model...</option>
+            </select>
+
+            <div id="charts-container" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-600">Mean Absolute Error (MAE)</h3>
+                <canvas id="maeChart"></canvas>
+                </div>
+                <div>
+                <h3 class="text-lg font-semibold mb-2 text-gray-600">Accuracy % (100 - MAE)</h3>
+                <canvas id="accuracyChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="data-analytics-container">
+        <h3 style="font-size: 24px; color: #0077cc; text-align: center; margin-bottom: 20px;"> <br> Data Visualization</h3>
+        <div class="scroll-container-wrapper">
+            <div class="scroll-arrow left" onclick="scrollRightNegative('top-scroll')">&#8592;</div>
+            <div class="scroll-container" id="top-scroll"> </div>
+            <div class="scroll-arrow right" onclick="scrollRight('top-scroll')">&#8594;</div>
+        </div>
+        
+        <div class="map-section" style="margin-top: 2em; border-top: 1px solid #ccc; padding-top: 1em;">
+            <div id="mirrored-routes-content"></div>
+        </div>
+        <!-- Bottom Scrollable Cards -->
+        <div class="scroll-container-wrapper">
+        <div class="scroll-arrow left" onclick="scrollRightNegative('bottom-scroll')">&#8592;</div>
+        <div class="scroll-container" id="bottom-scroll"></div>
+        <div class="scroll-arrow right" onclick="scrollRight('bottom-scroll')">&#8594;</div>
+        </div>
+    </div>
+
+
+</section>
+
+
+</main>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
+<script src="static/main.js"></script>
+<script src="static/dashboard.js"></script>
+
+<div id="custom-popup-overlay" class="custom-popup-overlay">
+  <div class="custom-popup-content" id="custom-popup-content">
+    <span class="custom-popup-close" id="custom-popup-close">&times;</span>
+  </div>
+</div>
+
+
+</body>
+</html>
