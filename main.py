@@ -788,4 +788,4 @@ async def get_last_results():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", port=8009, host="0.0.0.0")
+    uvicorn.run("main:app", port=8001, host="0.0.0.0")
